@@ -15,7 +15,7 @@ class ClassMethod {
         if(isset(self::$metadata[$this->classMethod])) {
             return self::$metadata[$this->classMethod];
         }
-        return 'n/a';
+        return '';
     }
 
     public function getMethodPHPDocLink($lng='en') {
