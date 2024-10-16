@@ -2,43 +2,96 @@
 
 namespace Clean\PhpAtlas;
 
+/**
+ * Class ClassMethod
+ *
+ * This class reflects a class method or function and provides metadata and PHP documentation links.
+ *
+ * Example:
+ * ```
+ * $method = new ClassMethod('MyClass::myMethod');
+ * echo $method->getMethodShortDescription();
+ * echo $method->getMethodPHPDocLink('en');
+ * ```
+ */
 class ClassMethod {
-    private object $method;
-    private string $classMethod;
-    private static $metadata;
+	/**
+	 * @var object Reflection or placeholder object for method or function
+	 */
+	private object $method;
 
-    public function __construct($classMethod) {
-        $this->classMethod = $classMethod;
-				if(str_contains($classMethod, '::')){
-	      	$this->method = new \ReflectionMethod($classMethod);
-				} else if(\function_exists($classMethod)) {
-					$this->method = new \stdClass;
-					$this->method->name = $classMethod;
-					$this->method->class = 'function';
-				} else {
-					$this->method = new \stdClass;
-					$this->method->name = 'ERROR';
-					$this->method->class = 'ERROR';
-				}
-        self::$metadata = require(__DIR__.'/data.php');
-    }
+	/**
+	 * @var string Name of the class method or function
+	 */
+	private string $classMethod;
 
-    public function getMethodShortDescription() {
-        if(isset(self::$metadata[$this->classMethod])) {
-            return self::$metadata[$this->classMethod];
-        }
-        return '';
-    }
+	/**
+	 * @var array|null Metadata for methods, loaded from an external file
+	 */
+	private static ?array $metadata = null;
 
-    public function getMethodPHPDocLink($lng='en') {
-				$mname = str_replace(['__','_'], ['','-'], $this->method->name);
-        return strtolower(sprintf('https://www.php.net/manual/%s/%s.%s.php', $lng, $this->method->class, $mname));
-    }
+	/**
+	 * ClassMethod constructor.
+	 *
+	 * @param string $classMethod The class method or function to reflect (e.g., 'MyClass::myMethod').
+	 */
+	public function __construct(string $classMethod) {
+		$this->classMethod = $classMethod;
 
-		private function getPHPMethodClass(){
-				return $this->method->class ?? 'function';
+		// Check if the provided method is a class method or function
+		if (str_contains($classMethod, '::')) {
+			$this->method = new \ReflectionMethod($classMethod);
+		} elseif (\function_exists($classMethod)) {
+			$this->method = new \stdClass();
+			$this->method->name = $classMethod;
+			$this->method->class = 'function';
+		} else {
+			$this->method = new \stdClass();
+			$this->method->name = 'ERROR';
+			$this->method->class = 'ERROR';
 		}
-		private function getPHPMethodName(){
-				return str_replace(['__','_'], ['','-'], $this->method->name);
-		}
+
+		// Load metadata from the external data file
+		self::$metadata = require(__DIR__ . '/data.php');
+	}
+
+	/**
+	 * Get the short description of the method from the metadata.
+	 *
+	 * @return string The short description of the method, or an empty string if not found.
+	 */
+	public function getMethodShortDescription(): string {
+		return self::$metadata[$this->classMethod] ?? '';
+	}
+
+	/**
+	 * Get the link to the PHP manual for the method or function.
+	 *
+	 * @param string $lng Language code for the PHP documentation link (default is 'en').
+	 * @return string The URL to the PHP manual for the method or function.
+	 */
+	public function getMethodPHPDocLink(string $lng = 'en'): string {
+		$mname = $this->getPHPMethodName();
+		$class = $this->getPHPMethodClass();
+
+		return strtolower(sprintf('https://www.php.net/manual/%s/%s.%s.php', $lng, $class, $mname));
+	}
+
+	/**
+	 * Get the class name of the PHP method or 'function' for standalone functions.
+	 *
+	 * @return string The class name of the method or 'function'.
+	 */
+	private function getPHPMethodClass(): string {
+		return $this->method->class ?? 'function';
+	}
+
+	/**
+	 * Get the PHP method or function name, formatted for a URL (removing underscores).
+	 *
+	 * @return string The method or function name, formatted for URLs.
+	 */
+	private function getPHPMethodName(): string {
+		return str_replace(['__', '_'], ['', '-'], $this->method->name);
+	}
 }
