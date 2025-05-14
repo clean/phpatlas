@@ -7,7 +7,7 @@ via Composer
 
 ```json
 "require": {
-  "clean/phpatlas": "dev-master"
+  "yohn/phpatlas": "dev-master"
 }
 ```
 
