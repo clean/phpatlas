@@ -1,8 +1,10 @@
 <?php namespace Test\Clean\PhpAtlas;
 
 use Clean\PhpAtlas as PhpAtlas;
+use PHPUnit\Framework\TestCase;
 
-class TestCase extends \PHPUnit_Framework_TestCase
+
+class PhpAtlasTest extends TestCase
 {
     public function testGetMethodShortDescriptoion()
     {
