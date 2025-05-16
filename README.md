@@ -1,8 +1,10 @@
 # Clean\PhpAtlas
-[![Build Status](https://travis-ci.org/clean/view.svg?branch=master)](https://travis-ci.org/clean/phpatlas)
-[![Code Climate](https://codeclimate.com/github/clean/view/badges/gpa.svg)](https://codeclimate.com/github/clean/phpatlas)
-[![Test Coverage](https://codeclimate.com/github/clean/view/badges/coverage.svg)](https://codeclimate.com/github/clean/phpatlas/coverage)
-[![Issue Count](https://codeclimate.com/github/clean/view/badges/issue_count.svg)](https://codeclimate.com/github/clean/phpatlas)
+
+[![Latest Stable Version](http://poser.pugx.org/clean/phpatlas/v)](https://packagist.org/packages/clean/phpatlas) 
+[![Total Downloads](http://poser.pugx.org/clean/phpatlas/downloads)](https://packagist.org/packages/clean/phpatlas) 
+[![Monthly Downloads](http://poser.pugx.org/clean/phpatlas/d/monthly)](https://packagist.org/packages/clean/phpatlas)
+[![License](http://poser.pugx.org/clean/phpatlas/license)](https://packagist.org/packages/clean/phpatlas) 
+[![PHP Version Require](http://poser.pugx.org/clean/phpatlas/require/php)](https://packagist.org/packages/clean/phpatlas)
 
 PhpAtlas allow to access description of all PHP methods used in the [PHP manual](https://www.php.net/manual/en/indexes.functions.php)
 
