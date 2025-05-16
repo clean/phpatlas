@@ -24,3 +24,5 @@ via Composer
 $method = \Clean\PhpAtlas\ClassName('ArrayAccess::offsetExists');
 echo $method->getMethodShortDescription(); // => "Whether an offset exists",
 ```
+
+[Example code](example/example1.php)
