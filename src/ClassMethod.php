@@ -40,7 +40,9 @@ class ClassMethod {
 
 		// Check if the provided method is a class method or function
 		if (str_contains($classMethod, '::')) {
-			$this->method = new \ReflectionMethod($classMethod);
+      // Split the class and method name
+      [$class, $method] = explode('::', $classMethod);
+			$this->method = new \ReflectionMethod($class, $method);
 		} elseif (\function_exists($classMethod)) {
 			$this->method = new \stdClass();
 			$this->method->name = $classMethod;
@@ -52,7 +54,9 @@ class ClassMethod {
 		}
 
 		// Load metadata from the external data file
-		self::$metadata = require(__DIR__ . '/data.php');
+    if (self::$metadata === null) {
+      self::$metadata = require(__DIR__ . '/data.php');
+    }
 	}
 
 	/**
